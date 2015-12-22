@@ -1,0 +1,103 @@
+#%RAML 0.8
+title: Parcel Delivery API
+version: v1
+baseUri: https://raml-demo-api.azurewebsites.net/{version}
+protocols: [ HTTP, HTTPS ]
+schemas:
+  - ErrorMessage: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Error Message",
+        "type": "object",
+        "properties": {                 
+          "message": {
+            "description": "The error message of the error.",
+            "type": "string"
+          }
+        }
+      }
+traits:
+  - requiresValidParcelId:
+      usage: |
+        Apply this to any method which requires a valid Parcel ID in the request.
+      responses:
+        406:
+          description: Parcel ID was in an incorrect format.
+          body:
+            application/json:
+              schema: ErrorMessage
+              example: |
+                {
+                  "message": "Parcel ID has to be 6 characters long and may only contain digits."
+                }
+        404:
+          description: Could not find the specified parcel ID.
+          body:
+            application/json:
+              schema: ErrorMessage
+              example: |
+                {
+                  "message": "Parcel ID not found."
+                }
+/status/{parcelId}:
+  displayName: Parcel Status Information
+  uriParameters:
+    parcelId:
+      displayName: Parcel ID
+      type: string
+      required: true
+      minLength: 6
+      maxLength: 6
+      example: 123456
+  is: [ requiresValidParcelId ]
+  get:
+    description: Retrieves the current status for the specified parcel ID.
+    responses:
+      200:
+        description: Current status.
+        body:
+          application/json:
+            schema: |
+              {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "title": "Delivery Status",
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "description": "The current status of the delivery.",
+                    "type": "string"
+                  },
+                  "updated": {
+                    "description": "The date time the last status update.",
+                    "type": "string"
+                  }
+                }
+              }
+            example: |
+              {
+                "status": "Parcel is out for delivery.",
+                "updated": "2015-12-09T16:53:19.5168335+00:00"
+              }
+  put:
+    description: Creates or updates the status for the specified parcel ID.
+    body:
+      application/json:
+        schema: |
+          {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "title": "Status Update",
+            "type": "object",
+            "properties": {                 
+              "status": {
+                "description": "The new status update message.",
+                "type": "string"
+              }
+            }
+          } 
+        example: |
+          {
+            "status": "Delivered and signed by customer."
+          }
+    responses:
+      201:
+        description: The status has been successfully updated.
