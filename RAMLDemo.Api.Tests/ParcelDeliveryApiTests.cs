@@ -10,7 +10,7 @@ namespace RAMLDemo.Api.Tests
     public class ParcelDeliveryApiTests
     {
         [Test]
-        public async Task IntegrationTest1()
+        public async Task IntegrationTest()
         {
             // Arrange test arguments
             const string endpoint = "http://localhost/raml-demo-api/v1/status";
