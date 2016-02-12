@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
@@ -8,9 +7,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("RAMLDemo.Api.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Gamesys Ltd")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("RAMLDemo.Api.Tests")]
-[assembly: AssemblyCopyright("Copyright © Gamesys Ltd 2015")]
+[assembly: AssemblyCopyright("Copyright © Dustin Moris Gorski 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
